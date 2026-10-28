@@ -66,7 +66,11 @@ hyprctl kill                  # clicar numa janela para matá-la (Super+Esc)
 ```
 
 ## Fluxo para mudar algo
+<<<<<<< HEAD
 1. Ache o módulo certo na tabela. 2. Leia o arquivo antes de editar. 3. Edite. 4. `hyprctl configerrors` (deve vir vazio). 5. Teste o efeito (ex.: `hyprctl binds | grep ...`). 6. Registre em `learnings.md` se descobriu algo novo.
+=======
+1. Ache o módulo certo na tabela. 2. Leia o arquivo antes de editar. 3. Edite. 4. `hyprctl configerrors` (deve vir vazio). 5. Teste o efeito (ex.: `hyprctl binds | grep ...`). 6. Registre em `learnings.md` (ou `local/learnings.md`, se for específico desta máquina) se descobriu algo novo.
+>>>>>>> 7e5a2d3 (Skill do Claude Code para CachyOS com Hyprland e Noctalia)
 
 ## NVIDIA + Hyprland
 As variáveis (`GBM_BACKEND`, `__GLX_VENDOR_LIBRARY_NAME`, `LIBVA_DRIVER_NAME`, `__GL_GSYNC_ALLOWED`) existem comentadas em `~/.config/uwsm/env`. Ative só se houver problema real; veja https://wiki.hypr.land/Nvidia/ e `system.md`.

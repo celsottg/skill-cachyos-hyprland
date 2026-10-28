@@ -11,7 +11,11 @@ O ambiente deste computador tem particularidades que contrariam o que a maioria 
 
 ## Fatos do ambiente (resumo)
 
+<<<<<<< HEAD
 Detalhes e versões em `references/environment.md`. O essencial:
+=======
+Detalhes e versões em `references/local/environment.md` (fora do git; se não existir, crie a partir de `references/environment.example.md` medindo o sistema). O essencial:
+>>>>>>> 7e5a2d3 (Skill do Claude Code para CachyOS com Hyprland e Noctalia)
 
 - Config do Hyprland: `~/.config/hypr/hyprland.lua`, que faz `require("config.*")` dos módulos em `~/.config/hypr/config/`. Sintaxe hyprlang (`hyprland.conf`) está obsoleta desde a 0.55.
 - Shell/barra/launcher/OSD/lock: **Noctalia** (`~/.config/noctalia/config.toml`, controle via `noctalia msg ...`).
@@ -27,9 +31,16 @@ Detalhes e versões em `references/environment.md`. O essencial:
 | Keybinds, monitores, window/workspace/layer rules, autostart, env, input, animações (Lua) | `references/hyprland.md` |
 | Barra, widgets, painéis, tema/cores, `noctalia msg`, lock/idle, screenshots | `references/noctalia.md` |
 | Pacotes, kernels, repositórios otimizados, btrfs/snapper, rEFInd, NVIDIA, jogos, serviços | `references/system.md` |
+<<<<<<< HEAD
 | Fatos medidos deste PC (versões, hardware, apps padrão, layout de arquivos) | `references/environment.md` |
 | Links oficiais de documentação, para consultar quando o guia local não bastar | `references/docs.md` |
 | Descobertas, armadilhas e correções acumuladas | `references/learnings.md` |
+=======
+| Fatos medidos deste PC (versões, hardware, apps padrão, layout de arquivos) | `references/local/environment.md` |
+| Links oficiais de documentação, para consultar quando o guia local não bastar | `references/docs.md` |
+| Descobertas, armadilhas e correções que valem para qualquer sistema | `references/learnings.md` |
+| Descobertas específicas deste hardware e desta config | `references/local/learnings.md` |
+>>>>>>> 7e5a2d3 (Skill do Claude Code para CachyOS com Hyprland e Noctalia)
 
 Se o pedido cruza temas (ex.: atalho que chama um comando do Noctalia), leia ambos.
 
@@ -47,8 +58,14 @@ Se o pedido cruza temas (ex.: atalho que chama um comando do Noctalia), leia amb
 
 Esta skill é um documento vivo. Sempre que for usada, ao terminar a tarefa pergunte-se: *mudou algo ou aprendi algo que a próxima execução precisaria saber?* Se sim, **atualize a skill na mesma sessão**, sem esperar o usuário pedir:
 
+<<<<<<< HEAD
 - **Mudança no sistema** (pacote instalado/removido, versão nova, atalho criado, arquivo de config novo, app padrão trocado, monitor adicionado): atualize `references/environment.md` e o guia do tema.
 - **Descoberta nova** (comando que funciona, armadilha, erro e sua causa, diferença entre a documentação e o que ocorre de fato, sintaxe que mudou): acrescente em `references/learnings.md` com data (`AAAA-MM-DD`), o sintoma e a solução. Se a descoberta corrigir algo escrito num guia, corrija o guia e não só acrescente.
+=======
+- **Mudança no sistema** (pacote instalado/removido, versão nova, atalho criado, arquivo de config novo, app padrão trocado, monitor adicionado): atualize `references/local/environment.md` e o guia do tema.
+- **Descoberta nova** (comando que funciona, armadilha, erro e sua causa, diferença entre a documentação e o que ocorre de fato, sintaxe que mudou): acrescente com data (`AAAA-MM-DD`), o sintoma e a solução. Se vale para qualquer sistema, vai em `references/learnings.md`, escrita de forma genérica; se depende deste hardware ou desta config (nomes de monitores, modelos, caminhos de backup), vai em `references/local/learnings.md`. Se a descoberta corrigir algo escrito num guia, corrija o guia e não só acrescente.
+- **Privacidade:** tudo fora de `references/local/` é publicado no GitHub. Nos guias e no `learnings.md` público, não cite modelos de hardware, nomes de cards, números de série nem detalhes pessoais.
+>>>>>>> 7e5a2d3 (Skill do Claude Code para CachyOS com Hyprland e Noctalia)
 - **Informação desatualizada ou errada** encontrada em qualquer arquivo: corrija ou remova na hora. Conteúdo velho é pior que ausência de conteúdo.
 
 Regras para as atualizações: edições pequenas e pontuais; só registre o que é verificado (testado ou lido na doc/`--help`); não grave segredos, senhas, tokens nem UUIDs de disco; mantenha este `SKILL.md` curto e leve os detalhes para `references/`. Ao final, diga ao usuário em uma linha o que foi atualizado na skill.
