@@ -53,7 +53,13 @@ O `SKILL.md` fica curto de propósito. O agente só abre o guia de referência d
 
 ### Skill autoatualizável
 
-Ao terminar cada tarefa, o agente se pergunta se algo mudou ou se aprendeu algo novo, e atualiza a skill na mesma sessão:
+Ao terminar cada tarefa, o agente se pergunta se algo mudou ou se aprendeu algo novo. Se sim:
+
+1. mostra o que entendeu e o que pretende gravar, e **só grava depois da sua confirmação**;
+2. grava no arquivo certo;
+3. **prepara um commit** com as mudanças versionadas (sem `push`, que fica a seu critério).
+
+Para onde vai cada coisa:
 
 - mudança no sistema → `local/environment.md` e o guia do tema;
 - descoberta que vale para qualquer sistema → `learnings.md` (público), escrita de forma genérica;
@@ -62,7 +68,7 @@ Ao terminar cada tarefa, o agente se pergunta se algo mudou ou se aprendeu algo 
 
 Regras: só registrar o que foi verificado, nunca gravar segredos, tokens ou UUIDs de disco, não citar modelos de hardware fora de `local/` e manter o `SKILL.md` enxuto.
 
-Na prática, o repositório muda com o uso. Revise o `git diff` antes de cada commit.
+Na prática, o repositório muda com o uso. Revise os commits (`git log -p`) antes de enviar.
 
 ## Instalação
 
