@@ -57,7 +57,7 @@ Ao terminar cada tarefa, o agente se pergunta se algo mudou ou se aprendeu algo 
 
 1. mostra o que entendeu e o que pretende gravar, e **só grava depois da sua confirmação**;
 2. grava no arquivo certo;
-3. **prepara um commit** com as mudanças versionadas (sem `push`, que fica a seu critério).
+3. **abre um PR para a `main`** com as mudanças versionadas, numa branch própria. A `main` é protegida (PR com ao menos 1 aprovação), então o agente nunca faz commit nem `push` direto nela e não faz o merge: a revisão e a aprovação ficam com você no GitHub.
 
 Para onde vai cada coisa:
 
@@ -68,7 +68,7 @@ Para onde vai cada coisa:
 
 Regras: só registrar o que foi verificado, nunca gravar segredos, tokens ou UUIDs de disco, não citar modelos de hardware fora de `local/` e manter o `SKILL.md` enxuto.
 
-Na prática, o repositório muda com o uso. Revise os commits (`git log -p`) antes de enviar.
+Na prática, o repositório muda com o uso. Revise cada PR no GitHub antes de aprovar.
 
 ## Instalação
 
