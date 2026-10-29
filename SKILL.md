@@ -63,7 +63,13 @@ Esta skill é um documento vivo. Sempre que for usada, ao terminar a tarefa perg
 
 1. **Confirme antes de gravar.** Mostre ao usuário, de forma curta, o que entendeu e o que pretende registrar: o texto da entrada, em qual arquivo e se é público ou `local/`. Pergunte se o entendimento está certo e se pode gravar. Só edite a skill depois do "sim"; se ele corrigir algo, ajuste e confirme de novo.
 2. **Grave** conforme as regras abaixo.
-3. **Prepare o commit.** Depois de gravar, rode `git -C ~/.claude/skills/cachyos status` e `git diff`. Confira que não há marcadores de conflito (`<<<<<<<`) nem detalhes pessoais nos arquivos versionados, e então faça `git add` só dos arquivos que você alterou e `git commit` com uma mensagem curta em português (ex.: `learnings: headset USB sem som por PCM em 0%`). Se a mudança foi só em `references/local/`, não há commit: avise isso. Não faça `push` sem o usuário pedir; ao final, mostre o hash do commit e pergunte se pode enviar.
+3. **Abra um PR para a `main`.** A `main` é protegida: exige PR com ao menos 1 aprovação, então **nunca faça commit nem `push` direto nela**. Depois de gravar, rode `git -C ~/.claude/skills/cachyos status` e `git diff`. Confira que não há marcadores de conflito (`<<<<<<<`) nem detalhes pessoais nos arquivos versionados. Então:
+   1. Crie uma branch a partir da `main` atualizada (`git fetch origin main` e `git switch -c learnings/<assunto-curto> origin/main`, levando as alterações junto). Se já estiver numa branch de trabalho da skill, reutilize-a.
+   2. `git add` só dos arquivos que você alterou e `git commit` com uma mensagem curta em português (ex.: `learnings: headset USB sem som por PCM em 0%`).
+   3. `git push -u origin <branch>` e abra o PR contra a `main` com `gh pr create --base main` (título igual à mensagem do commit; corpo com o que mudou e por quê). Sem o `gh`, mostre o link de comparação do GitHub para o usuário abrir o PR.
+   4. Não faça merge: a aprovação e o merge são do usuário (ou de quem revisa) no GitHub.
+
+   Se a mudança foi só em `references/local/`, não há commit nem PR: avise isso.
 
 O que gravar e onde:
 
@@ -72,4 +78,4 @@ O que gravar e onde:
 - **Privacidade:** tudo fora de `references/local/` é publicado no GitHub. Nos guias e no `learnings.md` público, não cite modelos de hardware, nomes de cards, números de série nem detalhes pessoais.
 - **Informação desatualizada ou errada** encontrada em qualquer arquivo: proponha a correção ou remoção na hora (com a mesma confirmação do passo 1). Conteúdo velho é pior que ausência de conteúdo.
 
-Regras para as atualizações: edições pequenas e pontuais; só registre o que é verificado (testado ou lido na doc/`--help`); não grave segredos, senhas, tokens nem UUIDs de disco; mantenha este `SKILL.md` curto e leve os detalhes para `references/`. Ao final, diga ao usuário em uma linha o que foi atualizado na skill e o hash do commit.
+Regras para as atualizações: edições pequenas e pontuais; só registre o que é verificado (testado ou lido na doc/`--help`); não grave segredos, senhas, tokens nem UUIDs de disco; mantenha este `SKILL.md` curto e leve os detalhes para `references/`. Ao final, diga ao usuário em uma linha o que foi atualizado na skill e o link do PR.
