@@ -2,9 +2,9 @@
 
 Skill para o [Claude Code](https://claude.com/claude-code) que ensina o agente a configurar, manter e diagnosticar um desktop **CachyOS** com **Hyprland** (config em Lua), shell **Noctalia** e sessão **uwsm**.
 
-A skill existe porque este ambiente contraria boa parte dos tutoriais da internet:
+A skill existe porque o setup padrão do CachyOS com Hyprland contraria boa parte dos tutoriais da internet:
 
-| O que a maioria dos tutoriais assume | O que este sistema usa |
+| O que a maioria dos tutoriais assume | O que o setup padrão usa |
 |---|---|
 | `hyprland.conf` (hyprlang), `bind = ...`, `windowrulev2 = ...` | `hyprland.lua` + módulos `config/*.lua` (Hyprland 0.55+) |
 | Waybar, rofi/wofi, swaync, hyprlock | Noctalia (barra, launcher, notificações, OSD, lock), controlado por `noctalia msg` |
@@ -90,12 +90,12 @@ Exemplos de pedidos:
 
 ## Adaptar para o seu sistema
 
-Os guias `hyprland.md`, `noctalia.md`, `system.md`, `docs.md` e `learnings.md` valem para qualquer instalação CachyOS + Hyprland Lua + Noctalia. Depois de clonar:
+Os guias `hyprland.md`, `noctalia.md`, `system.md`, `docs.md` e `learnings.md` descrevem o setup padrão (CachyOS + Hyprland Lua + Noctalia) e **não assumem** teclado, GPU, bootloader nem filesystem específicos: o `SKILL.md` manda o agente detectar isso ("Passo 0") antes de aplicar qualquer guia. Depois de clonar:
 
-1. **Gere o inventário da sua máquina.** Peça ao Claude: *"levante o ambiente deste PC e crie o references/local/environment.md a partir do modelo"*. Ele roda `hyprctl`, `pacman -Q` e lê `~/.config/hypr/config/`. O arquivo fica só no seu disco.
-2. **`SKILL.md`, seção "Fatos do ambiente":** ajuste layout de teclado, GPU, bootloader e shell, se forem diferentes.
+1. **Gere o inventário da sua máquina.** Peça ao Claude: *"levante o ambiente deste PC e crie o references/local/environment.md a partir do modelo"*. Ele roda `hyprctl`, `pacman -Q` e lê `~/.config/hypr/`. O arquivo fica só no seu disco.
+2. Não precisa editar o `SKILL.md`.
 
-Sem NVIDIA, sem rEFInd ou sem btrfs, as seções correspondentes de `system.md` simplesmente não se aplicam.
+Sem NVIDIA, btrfs ou rEFInd, ou com `hyprland.conf` em vez de Lua, o agente avisa e usa só o que ainda se aplica.
 
 ## Escopo
 

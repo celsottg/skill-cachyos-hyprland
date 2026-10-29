@@ -1,6 +1,8 @@
 # Sistema CachyOS (pacotes, kernel, disco, boot, GPU)
 
-> Seções marcadas (geral) vêm de conhecimento comum de Arch/CachyOS e devem ser confirmadas na wiki (`docs.md`) antes de ações destrutivas. Troque por fatos verificados conforme usar.
+Leia antes de mexer em pacotes, kernel, disco, boot, GPU, jogos ou serviços.
+
+> Este guia é genérico e condicional: cada seção só vale se o componente existir no sistema (confirme com os comandos do Passo 0 do `SKILL.md`; fatos desta máquina ficam em `local/environment.md`). O conteúdo vem de conhecimento comum de Arch/CachyOS; confirme na wiki (`docs.md`) antes de ações destrutivas e troque por fatos verificados conforme usar.
 
 ## Pacotes
 - `sudo pacman -Syu` atualiza tudo (rolling: nunca instale com `-Sy` sem `-u`). `paru` para AUR (`paru -Syu` atualiza repo + AUR).
@@ -10,18 +12,18 @@
 - Arquivos `.pacnew`: comparar com `pacdiff` (do `pacman-contrib`) após updates.
 
 ## Kernel
-Instalados: `linux-cachyos(-nvidia-open)` e `linux-cachyos-lts(-nvidia-open)` (o LTS serve de fallback). Gerenciador: `cachyos-kernel-manager`. Ao trocar kernel, o módulo NVIDIA precisa casar (`-nvidia-open` por kernel). Initramfs: mkinitcpio ou dracut (confirmar qual está em uso antes de mexer). `ananicy-cpp` + `cachyos-ananicy-rules` e `cachyos-settings` aplicam ajustes de desempenho (sysctl, udev).
+Veja o que há instalado: `uname -r` e `pacman -Q | grep -E '^linux'`. Variantes comuns: `linux-cachyos`, `linux-cachyos-lts` (útil como fallback), com sufixo `-nvidia-open` quando o driver vem junto. Gerenciador: `cachyos-kernel-manager`. Ao trocar kernel, o módulo de vídeo precisa casar com ele (ex.: `-nvidia-open` por kernel). Initramfs: mkinitcpio ou dracut (confirmar qual está em uso antes de mexer). `ananicy-cpp` + `cachyos-ananicy-rules` e `cachyos-settings` aplicam ajustes de desempenho (sysctl, udev).
 
 ## Btrfs + snapper
-- `/` é btrfs com subvolume `@`. `snapper list-configs` / `snapper -c root list`; GUI: `btrfs-assistant`. Pode exigir sudo.
-- `refind-btrfs` gera entradas de boot a partir de snapshots no rEFInd (serviço systemd; o comando precisa de root).
+- Só se `findmnt -no FSTYPE /` for `btrfs` (o instalador do CachyOS permite outros, como ext4 ou xfs). Use `snapper list-configs` / `snapper -c root list`; GUI: `btrfs-assistant`. Pode exigir sudo.
+- Com rEFInd, `refind-btrfs` gera entradas de boot a partir de snapshots no rEFInd (serviço systemd; o comando precisa de root).
 - Antes de mudanças arriscadas no sistema, crie snapshot: `sudo snapper -c root create -d "antes de <mudança>"`.
 
-## Boot (rEFInd)
-Config em `/boot/EFI/refind/` ou `/efi/EFI/refind/` (confirmar o ponto de montagem da ESP com `findmnt`). A linha de comando do kernel atual inclui `quiet nowatchdog splash rw rootflags=subvol=/@`. Alterar parâmetros do kernel = confirmar com o usuário e fazer backup do arquivo.
+## Boot
+O bootloader varia (o instalador do CachyOS oferece GRUB, systemd-boot, rEFInd, entre outros). Identifique antes: `bootctl status`, `efibootmgr`, `ls /boot /efi`. Parâmetros atuais do kernel: `cat /proc/cmdline`. Onde editá-los depende do bootloader (ex.: rEFInd em `EFI/refind/` na ESP, achada com `findmnt`; GRUB em `/etc/default/grub` + `grub-mkconfig`; systemd-boot em `loader/entries/`). Alterar parâmetros do kernel = confirmar com o usuário e fazer backup do arquivo.
 
 ## NVIDIA
-Drivers: `nvidia-open` via pacotes do kernel CachyOS, `nvidia-utils`, `nvidia-settings`, `nvidia-prime` (híbrido: use `prime-run <app>`). Diagnóstico: `nvidia-smi`, `journalctl -b | grep -i nvidia`, `lsmod | grep nvidia`. Para DRM modeset/Wayland, ver https://wiki.hypr.land/Nvidia/ e a wiki do CachyOS.
+Só se `lspci` mostrar GPU NVIDIA. Drivers: `nvidia-open` via pacotes do kernel CachyOS, `nvidia-utils`, `nvidia-settings`, `nvidia-prime` (híbrido: use `prime-run <app>`). Diagnóstico: `nvidia-smi`, `journalctl -b | grep -i nvidia`, `lsmod | grep nvidia`. Para DRM modeset/Wayland, ver https://wiki.hypr.land/Nvidia/ e a wiki do CachyOS.
 
 ## Jogos
 Config de janela em `windowrules.lua` (workspace `gaming`, `steam_app.*`, gamescope). Wiki: https://wiki.cachyos.org/configuration/gaming/.

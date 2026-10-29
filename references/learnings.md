@@ -2,7 +2,7 @@
 
 Formato: `AAAA-MM-DD · tema · sintoma → causa/solução`. Mais recentes no topo. Corrija ou apague entradas que ficarem obsoletas.
 
-Este arquivo é público: só entra aqui o que vale para qualquer CachyOS + Hyprland Lua + Noctalia. Descobertas que dependem desta máquina (nomes de monitores, modelos de hardware, caminhos de backup) vão em `local/learnings.md`.
+Este arquivo é público: só entra aqui o que vale para qualquer CachyOS + Hyprland Lua + Noctalia. Escreva de forma genérica (sem modelos de hardware, nomes de monitores ou caminhos pessoais) e, se a descoberta depender do template padrão, diga isso. Descobertas que dependem desta máquina (nomes de monitores, modelos de hardware, caminhos de backup) vão em `local/learnings.md`.
 
 - 2026-10-28 · áudio · Headset USB é o sink padrão e está RUNNING, mas não sai som → o volume de **hardware** do card ALSA (controle `PCM`) está em 0%; o volume do sink no PipeWire é software e não compensa. Alguns cards têm dois índices (`PCM,0` Front L/R e `PCM,1` Mono/master) e o Mono pode voltar a 0% ao reconectar (kernel loga `broken mixer GET_CUR`). Correção: `amixer -c <card> sset PCM,0 75% unmute` e `amixer -c <card> sset PCM,1 75% unmute`. Diagnóstico: `pactl list short sinks`, `pactl get-sink-mute @DEFAULT_SINK@`, `amixer -c <card> scontents`. Para persistir, um serviço systemd de usuário pode reaplicar o volume a cada evento `'new' on sink` do `pactl subscribe`, identificando o card pelo nome, não pelo índice.
 - 2026-10-27 · hyprland · `hyprctl dispatch <nome> <args>` não funciona na 0.56 → use `hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = 4 }))'`.

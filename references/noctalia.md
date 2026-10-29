@@ -1,5 +1,7 @@
 # Noctalia (shell: barra, launcher, painéis, OSD, lock, screenshots)
 
+Leia antes de mexer na barra, widgets, painéis, tema, lock/idle ou screenshots. Só se aplica se o Noctalia estiver instalado (`pacman -Q noctalia`); caso contrário, descubra qual shell/barra o usuário usa (`ls ~/.config`) e use `docs.md`.
+
 Documentação: https://docs.noctalia.dev. A ajuda do binário instalado é a fonte mais fiel da versão local:
 ```
 noctalia --help
@@ -13,17 +15,17 @@ noctalia theme <imagem> # gera paleta a partir de imagem
 - Também pode haver `settings.toml` (esquema de cores etc.) gerenciado pela UI; prefira a UI (`SUPER+Z`) para ajustes visuais, ou `noctalia msg config-set <caminho> <valor>` para script.
 - Após editar à mão: `noctalia config` (validar) e `noctalia msg config-reload`.
 
-## Barra atual
-`start = launcher, clock, spacer_1, group:g1` · `center = workspaces, spacer_1, active_window` · `end = media, spacer_1, tray, notifications, network, volume, session`. Grupo `g1` (cápsula) = `temp, sysmon_2, sysmon_3`. Reordenar/adicionar widgets = editar essas listas.
+## Barra
+O layout fica em `[bar.default]` do `config.toml`, em listas `start`, `center` e `end` de nomes de widgets; grupos em cápsula usam `[[bar.default.capsule_group]]` e entram na lista como `group:<id>`. Reordenar/adicionar widgets = editar essas listas (leia a barra atual do usuário antes). A barra desta máquina está em `local/environment.md`.
 
 ## Integração com o Hyprland
-- Os atalhos chamam `noctalia msg ...` (ver `binds.lua`, variável `noctCall`). Para adicionar um atalho a uma função do Noctalia: `hl.bind(mainMod .. " + KEY", hl.dsp.exec_cmd(noctCall .. "<comando>"))`.
+- No template, os atalhos chamam `noctalia msg ...` (ver `binds.lua`, variável `noctCall`). Para adicionar um atalho a uma função do Noctalia: `hl.bind(mainMod .. " + KEY", hl.dsp.exec_cmd(noctCall .. "<comando>"))`.
 - Inicia por `hl.exec_cmd("noctalia")` em `autostart.lua`; polkit agent é do próprio Noctalia (`polkit_agent = true`).
 - Layer rules de blur/animação para os namespaces `noctalia-*` estão em `windowrules.lua`.
 - Janelas de configuração do Noctalia são flutuantes (regra de classe `noctalia.Noctalia`).
 
 ## Screenshots
-`Print` → `screenshot-region`, `Super+Print` → `screenshot-fullscreen`. Config atual: não copia para clipboard, não salva em arquivo, **envia por pipe ao `swash`** (visualizador/editor), que salva como `swash-AAAA-MM-DD_HH:MM:SS.png`. Mude em `[shell.screenshot]`.
+No template, `Print` → `screenshot-region` e `Super+Print` → `screenshot-fullscreen` (confira com `hyprctl binds`). Destino (clipboard, arquivo, pipe para um visualizador/editor como o `swash`) e pasta são definidos em `[shell.screenshot]`; leia essa seção para saber o que o usuário tem antes de responder onde as capturas vão parar.
 
 ## Sessão/greeter
 Ações de sessão (lock, logout, ...) em `[[shell.session.actions]]`. O login usa `noctalia-greeter` via greetd; sincronizar tema/wallpaper: `noctalia msg greeter-sync`.

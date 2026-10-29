@@ -1,6 +1,8 @@
 # Hyprland (config em Lua, 0.55+)
 
-Os exemplos abaixo foram extraídos da config real deste PC (`~/.config/hypr/config/*.lua`). Antes de inventar sintaxe, procure um exemplo parecido nesses arquivos; se não houver, consulte a wiki (`docs.md`). Muito conteúdo da internet ainda usa hyprlang (`bind = ...`, `windowrulev2 = ...`): **não copie** esse formato.
+Leia antes de mexer em atalhos, monitores, regras de janela ou qualquer config do Hyprland.
+
+A estrutura e os exemplos abaixo seguem o template padrão do pacote `cachyos-hypr-noctalia` (defaults em `/etc/skel/.config/hypr/`, só leitura). Confirme com `ls ~/.config/hypr/`: se o usuário não usa esse template (ex.: tem só `hyprland.lua` monolítico, ou `hyprland.conf`), os nomes de arquivo abaixo mudam; ache o equivalente com `grep -rn` em `~/.config/hypr/`. Antes de inventar sintaxe, procure um exemplo parecido nos arquivos do próprio usuário; se não houver, consulte a wiki (`docs.md`). Muito conteúdo da internet ainda usa hyprlang (`bind = ...`, `windowrulev2 = ...`): **não copie** esse formato.
 
 ## Onde editar cada coisa
 | Quero mexer em | Arquivo |
@@ -46,11 +48,11 @@ hl.workspace_rule({ workspace = "1", monitor = MONITOR1, default = true, persist
 hl.on("hyprland.start", function() hl.exec_cmd("noctalia") end)
 ```
 
-Convenções do arquivo de binds: `mainMod = "SUPER"`, `noctCall = "noctalia msg "`, `launchPrefix = "uwsm app -- "` (todo app lançado por atalho passa por uwsm).
+Convenções do arquivo de binds no template: `mainMod = "SUPER"`, `noctCall = "noctalia msg "`, `launchPrefix = "uwsm app -- "` (todo app lançado por atalho passa por uwsm). Confira no topo do `binds.lua` do usuário se existem.
 
 ## Armadilhas
-- **Atalhos com número** usam `digitCode(n)` (`code:10`..`code:19`, keycode físico) herdado do template do CachyOS, que vale para qualquer layout. Mantenha o padrão em vez de usar `"1"`, `"2"` direto.
-- **Teclado**: `hl.config({ input = { kb_layout = "br" } })` em `inputs.lua` (ABNT2 é o padrão do layout `br`; `kb_variant` só para variantes como `nodeadkeys`). Vários layouts: `kb_layout = "br,us"` + `kb_options = "grp:alt_shift_toggle"`; o Noctalia tem `noctalia msg keyboard-layout-cycle`.
+- **Atalhos com número**: o template usa `digitCode(n)` (`code:10`..`code:19`, keycode físico), que vale para qualquer layout de teclado. Se o arquivo de binds do usuário usa isso, mantenha o padrão em vez de `"1"`, `"2"` direto.
+- **Teclado**: não suponha o layout; veja o atual em `hyprctl devices -j` (campo `layout`). Definição: `hl.config({ input = { kb_layout = "us" } })` em `inputs.lua` (`kb_variant` para variantes, ex. `intl`, `nodeadkeys`). Vários layouts: `kb_layout = "br,us"` + `kb_options = "grp:alt_shift_toggle"`; o Noctalia tem `noctalia msg keyboard-layout-cycle`.
 - Regex em `match` é aplicado à string inteira; use `^(...)$` e escape de `\\.` dentro de strings Lua. `negative:` inverte o match.
 - Descobrir `class`/`title` de uma janela: `hyprctl clients` ou `hyprctl activewindow`.
 - Nome de monitor: `hyprctl monitors`. `MONITOR1=""` significa "qualquer", então para regras por monitor específico coloque o nome real.
@@ -69,4 +71,4 @@ hyprctl kill                  # clicar numa janela para matá-la (Super+Esc)
 1. Ache o módulo certo na tabela. 2. Leia o arquivo antes de editar. 3. Edite. 4. `hyprctl configerrors` (deve vir vazio). 5. Teste o efeito (ex.: `hyprctl binds | grep ...`). 6. Registre em `learnings.md` (ou `local/learnings.md`, se for específico desta máquina) se descobriu algo novo.
 
 ## NVIDIA + Hyprland
-As variáveis (`GBM_BACKEND`, `__GLX_VENDOR_LIBRARY_NAME`, `LIBVA_DRIVER_NAME`, `__GL_GSYNC_ALLOWED`) existem comentadas em `~/.config/uwsm/env`. Ative só se houver problema real; veja https://wiki.hypr.land/Nvidia/ e `system.md`.
+Só se aplica se `lspci` mostrar GPU NVIDIA. As variáveis (`GBM_BACKEND`, `__GLX_VENDOR_LIBRARY_NAME`, `LIBVA_DRIVER_NAME`, `__GL_GSYNC_ALLOWED`) costumam vir comentadas no template (`~/.config/uwsm/env` ou `environment.lua`). Ative só se houver problema real; veja https://wiki.hypr.land/Nvidia/ e `system.md`.

@@ -11,6 +11,7 @@
 - Sessão / display manager:
 - Shell e terminal padrão:
 - Bootloader e filesystem de `/` (snapper?):
+- Parâmetros do kernel (`cat /proc/cmdline`):
 - GPU e drivers (variáveis NVIDIA ativas ou comentadas?):
 - AUR helper e layout de teclado (`hyprctl devices -j`):
 
@@ -36,7 +37,7 @@ Defaults originais do pacote: `/etc/skel/.config/hypr/` (comparar com `diff -r`)
 <!-- hyprctl binds -->
 
 ## Noctalia (resumo do `config.toml`)
-<!-- widgets da barra (start/center/end), ui_scale, destino dos screenshots -->
+<!-- widgets da barra (start/center/end), ui_scale, destino dos screenshots (`[shell.screenshot]`) -->
 
 ## Serviços e autostart próprios
 <!-- config/autostart.lua · systemctl --user list-unit-files --state=enabled -->
