@@ -52,10 +52,11 @@ Convenções do arquivo de binds no template: `mainMod = "SUPER"`, `noctCall = "
 
 ## Armadilhas
 - **Atalhos com número**: o template usa `digitCode(n)` (`code:10`..`code:19`, keycode físico), que vale para qualquer layout de teclado. Se o arquivo de binds do usuário usa isso, mantenha o padrão em vez de `"1"`, `"2"` direto.
-- **Teclado**: não suponha o layout; veja o atual em `hyprctl devices -j` (campo `layout`). Definição: `hl.config({ input = { kb_layout = "us" } })` em `inputs.lua` (`kb_variant` para variantes, ex. `intl`, `nodeadkeys`). Vários layouts: `kb_layout = "br,us"` + `kb_options = "grp:alt_shift_toggle"`; o Noctalia tem `noctalia msg keyboard-layout-cycle`.
+- **Teclado**: não suponha o layout; veja o atual em `hyprctl devices -j` (campo `layout`). Definição: `hl.config({ input = { kb_layout = "us" } })` em `inputs.lua` (`kb_variant` para variantes, ex. `intl`, `nodeadkeys`). Vários layouts: `kb_layout = "br,us"` + `kb_options = "grp:alt_shift_toggle"`; o Noctalia tem `noctalia msg keyboard-layout-cycle`. ABNT2: `kb_layout = "br"` + `kb_model = "abnt2"`. Num Lock ligado ao iniciar: `numlock_by_default = true` (aplica na hora ao salvar; conferir com `hyprctl devices -j`, campo `numLock`). (2026-10-31)
 - Regex em `match` é aplicado à string inteira; use `^(...)$` e escape de `\\.` dentro de strings Lua. `negative:` inverte o match.
 - Descobrir `class`/`title` de uma janela: `hyprctl clients` ou `hyprctl activewindow`.
 - Nome de monitor: `hyprctl monitors`. `MONITOR1=""` significa "qualquer", então para regras por monitor específico coloque o nome real.
+- **Posição/frequência fixas sem mexer em `MONITOR1..3`**: acrescente em `monitors.lua`, depois da regra genérica do template, um `hl.monitor({ output = "<nome real>", mode = "<LxA@Hz>", position = "<X>x<Y>", scale = "1" })` por saída; elas passam a valer no lugar da genérica, que continua cobrindo monitores novos. `position` é em pixels lógicos: para pôr um monitor à esquerda, use `0x0` nele e `<largura dele>x0` no outro. Modos aceitos: `hyprctl monitors` (`availableModes`); `preferred` nem sempre escolhe a maior frequência. Assim os atalhos e workspaces por `MONITOR1` não mudam. (2026-10-31)
 
 ## Comandos úteis
 ```
