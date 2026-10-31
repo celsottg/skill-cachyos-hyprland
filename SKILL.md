@@ -65,9 +65,10 @@ Esta skill é um documento vivo. Sempre que for usada, ao terminar a tarefa perg
 2. **Grave** conforme as regras abaixo.
 3. **Abra um PR para a `main`.** A `main` é protegida: exige PR com ao menos 1 aprovação, então **nunca faça commit nem `push` direto nela**. Depois de gravar, rode `git -C ~/.claude/skills/cachyos status` e `git diff`. Confira que não há marcadores de conflito (`<<<<<<<`) nem detalhes pessoais nos arquivos versionados. Então:
    1. Crie uma branch a partir da `main` atualizada (`git fetch origin main` e `git switch -c learnings/<assunto-curto> origin/main`, levando as alterações junto). Se já estiver numa branch de trabalho da skill, reutilize-a.
-   2. `git add` só dos arquivos que você alterou e `git commit` com uma mensagem curta em português (ex.: `learnings: headset USB sem som por PCM em 0%`).
-   3. `git push -u origin <branch>` e abra o PR contra a `main` com `gh pr create --base main` (título igual à mensagem do commit; corpo com o que mudou e por quê). Sem o `gh`, mostre o link de comparação do GitHub para o usuário abrir o PR.
-   4. Não faça merge: a aprovação e o merge são do usuário (ou de quem revisa) no GitHub.
+   2. **Confirme a identidade com o usuário antes do commit.** Rode `git -C ~/.claude/skills/cachyos config user.name`, `config user.email` e `gh auth status` (a conta que abre o PR), mostre o resultado e pergunte ao usuário se é com esse nome, e-mail e conta que o commit e o PR devem sair. Se algo estiver vazio ou errado, peça os dados e deixe o usuário escolher entre gravar no repositório (`git config user.name/user.email`, sem `--global`), gravar globalmente ou usar só neste commit (`git -c user.name=... -c user.email=... commit`). **Nunca** tire a identidade do `git log`, de commits anteriores nem de outra fonte: quem fez os últimos commits pode não ser quem está usando a skill.
+   3. `git add` só dos arquivos que você alterou e `git commit` com uma mensagem curta em português (ex.: `learnings: headset USB sem som por PCM em 0%`).
+   4. `git push -u origin <branch>` e abra o PR contra a `main` com `gh pr create --base main` (título igual à mensagem do commit; corpo com o que mudou e por quê). Sem o `gh`, mostre o link de comparação do GitHub para o usuário abrir o PR.
+   5. Não faça merge: a aprovação e o merge são do usuário (ou de quem revisa) no GitHub.
 
    Se a mudança foi só em `references/local/`, não há commit nem PR: avise isso.
 
