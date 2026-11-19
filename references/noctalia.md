@@ -27,5 +27,10 @@ O layout fica em `[bar.default]` do `config.toml`, em listas `start`, `center` e
 ## Screenshots
 No template, `Print` → `screenshot-region` e `Super+Print` → `screenshot-fullscreen` (confira com `hyprctl binds`). Destino (clipboard, arquivo, pipe para um visualizador/editor como o `swash`) e pasta são definidos em `[shell.screenshot]`; leia essa seção para saber o que o usuário tem antes de responder onde as capturas vão parar.
 
+## Wallpaper
+- Trocar pela CLI (persiste): `noctalia msg wallpaper-set [connector] <path>`; sem `connector` aplica em todas as saídas. Para monitores de resoluções diferentes, gere uma imagem por saída e aplique por connector (`hyprctl monitors` mostra os nomes).
+- Consultar: `noctalia msg wallpaper-get [connector]` (sem connector, mostra o default). Também: `wallpaper-next|previous|random [connector]`.
+- Com `[theme] source = "wallpaper"`, trocar o wallpaper regenera as cores do tema (barra, terminal, GTK/Qt). Depois rode `noctalia msg greeter-sync` para levar à tela de login.
+
 ## Sessão/greeter
 Ações de sessão (lock, logout, ...) em `[[shell.session.actions]]`. O login usa `noctalia-greeter` via greetd; sincronizar tema/wallpaper: `noctalia msg greeter-sync`.
