@@ -18,6 +18,16 @@ noctalia theme <imagem> # gera paleta a partir de imagem
 ## Barra
 O layout fica em `[bar.default]` do `config.toml`, em listas `start`, `center` e `end` de nomes de widgets; grupos em cápsula usam `[[bar.default.capsule_group]]` e entram na lista como `group:<id>`. Reordenar/adicionar widgets = editar essas listas (leia a barra atual do usuário antes). A barra desta máquina está em `local/environment.md`.
 
+### Widget dinâmico (saída de comando na barra) = plugin local
+O `custom_button` é estático (`label`, `glyph`, `tooltip` e cliques em `[widget.<nome>.actions]` com `left = "exec <cmd>"`): não roda um comando periodicamente. Para algo no estilo `custom/*` do Waybar, crie um plugin Luau local (verificado em 2026-11-23, Noctalia 5.6):
+1. Pasta `~/.local/share/noctalia/plugins/<nome>/`, descoberta como fonte `[local]` (`noctalia msg plugins list` deve listá-la).
+2. `plugin.toml`: `id = "<autor>/<plugin>"`, `name`, `version = "1.0.0"`, `plugin_api = 3` (o mínimo que o plugin exige) e um bloco `[[widget]]` com `id` e `entry = "widget.luau"`.
+3. `widget.luau`: `noctalia.runAsync(cmd, function(res) ... end)` (`res.exitCode`, `res.stdout`), `barWidget.setText/setGlyph/setTooltip/setColor` (glyph = nome do Tabler, cor = papel do tema, como `secondary`/`error`), `noctalia.setUpdateInterval(ms)`, e os callbacks globais `update()`, `onClick()` e `onRightClick()`. Use `noctalia.expandPath("~/...")` para os caminhos.
+4. Ative com `noctalia msg plugins enable <autor>/<plugin>`, que grava em `~/.local/state/noctalia/settings.toml` e não no `config.toml`.
+5. No `config.toml`: `[widget.<nome>]` com `type = "<autor>/<plugin>:<id do widget>"`, e `"<nome>"` na lista `start`/`center`/`end`. Depois rode `noctalia config validate` e `noctalia msg config-reload`.
+
+Docs: https://docs.noctalia.dev/noctalia/plugins/development/ (manifest, runtime-api, plugin-api). Pacotes feitos para o Omarchy/Waybar (ex.: `omarchy-*`) costumam falhar no passo que edita `~/.config/waybar/config.jsonc`, mas os scripts deles podem ser usados assim.
+
 ## Integração com o Hyprland
 - No template, os atalhos chamam `noctalia msg ...` (ver `binds.lua`, variável `noctCall`). Para adicionar um atalho a uma função do Noctalia: `hl.bind(mainMod .. " + KEY", hl.dsp.exec_cmd(noctCall .. "<comando>"))`.
 - Inicia por `hl.exec_cmd("noctalia")` em `autostart.lua`; polkit agent é do próprio Noctalia (`polkit_agent = true`).
